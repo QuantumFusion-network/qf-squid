@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:17.2
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    shm_size: 1gb
+    ports:
+      - ${PG_PORT:-5432}:5432
+      # command: ["postgres", "-c", "log_statement=all"]
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  squid:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    environment:
+      DB_URL: postgres://squid:squid@db:5432/squid
+      GQL_PORT: 4350
+      QF_NODE_RPC: ${QF_NODE_RPC:-ws://127.0.0.1:9944}
+    ports:
+      - 4350:4350
+    restart: unless-stopped
+
