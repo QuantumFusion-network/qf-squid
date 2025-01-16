@@ -1,14 +1,12 @@
 services:
-  db:
+  postgres:
     image: postgres:17.2
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     shm_size: 1gb
-    ports:
-      - "127.0.0.1:${PG_PORT:-5432}:5432"
-      # command: ["postgres", "-c", "log_statement=all"]
+    # command: ["postgres", "-c", "log_statement=all"]
     volumes:
       - ./data/db:/var/lib/postgresql/data
     restart: unless-stopped
@@ -18,10 +16,44 @@ services:
       dockerfile: Dockerfile
       context: ./
     environment:
-      DB_URL: postgres://squid:squid@db:5432/squid
+      DB_URL: postgres://squid:squid@postgres:5432/squid
       GQL_PORT: 4350
-      QF_NODE_RPC: ${QF_NODE_RPC:-ws://127.0.0.1:9944}
+      QF_NODE_RPC: ${QF_NODE_RPC:-ws://qf-node:9944}
     ports:
-      - 4350:4350
+      - "127.0.0.1:4350:4350" # GraphQL server
+      - "127.0.0.1:33015:33015" # prometheus metrics
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - qf-node
+
+  qf-node:
+    image: andor/qf-node:3d52362
+    ports:
+      # - "9944:9944"
+      - "127.0.0.1:9715:9615" # prometheus metrics
+    command:
+      - ./qf-node
+      - --chain=qf-devnet
+      - --base-path=/srv/qf-node
+      - --rpc-port=9944
+      - --rpc-external
+      - --rpc-cors=all
+      - --prometheus-port=9615
+      - --prometheus-external
+      - --bootnodes=/ip4/103.113.69.222/tcp/30333/p2p/12D3KooWMWYPNvMSSstMoADACyX7EppjuRWtTeugFcVEQcrrjvoR
+      - --pruning=archive
+    volumes:
+      - ./data/qf-node:/srv/qf-node
     restart: unless-stopped
 
+  hasura:
+    image: hasura/graphql-engine:v2.15.2
+    ports:
+      - "127.0.0.1:8880:8080"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://squid:squid@postgres:5432
+      HASURA_GRAPHQL_ENABLE_CONSOLE: true
+    depends_on:
+      - postgres
+    restart: unless-stopped
