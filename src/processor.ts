@@ -21,7 +21,7 @@ export const processor = new SubstrateBatchProcessor()
         // https://docs.subsquid.io/deploy-squid/env-variables/
         url: assertNotNull(process.env.QF_NODE_RPC, 'No RPC endpoint supplied'),
         // More RPC connection options at https://docs.subsquid.io/substrate-indexing/setup/general/#set-data-source
-        rateLimit: 10
+        // rateLimit: 10 // requests per second, default is no limit
     })
     .addEvent({
         name: [events.balances.transfer.name],
