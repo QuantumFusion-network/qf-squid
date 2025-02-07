@@ -1,10 +1,19 @@
 {
   "outDir": "src/types",
-  "specVersions": "https://v2.archive.subsquid.io/metadata/kusama",
+  "specVersions": "qf-devnet-metadata.jsonl",
   "pallets": {
     "Balances": {
       "events": [
         "Transfer"
+      ],
+      "calls": [],
+      "storage": [],
+      "constants": []
+    },
+    "QFPolkaVM": {
+      "events": [
+        "Calculated",
+        "ProgramBlobUploaded"
       ],
       "calls": [],
       "storage": [],
