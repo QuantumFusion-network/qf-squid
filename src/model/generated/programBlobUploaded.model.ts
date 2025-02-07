@@ -2,8 +2,8 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, I
 import {Account} from "./account.model"
 
 @Entity_()
-export class Transfer {
-    constructor(props?: Partial<Transfer>) {
+export class ProgramBlobUploaded {
+    constructor(props?: Partial<ProgramBlobUploaded>) {
         Object.assign(this, props)
     }
 
@@ -24,15 +24,14 @@ export class Transfer {
 
     @Index_()
     @ManyToOne_(() => Account, {nullable: true})
-    from!: Account
+    who!: Account
 
     @Index_()
-    @ManyToOne_(() => Account, {nullable: true})
-    to!: Account
+    @StringColumn_({nullable: false})
+    address!: string
 
-    @Index_()
-    @BigIntColumn_({nullable: false})
-    amount!: bigint
+    @StringColumn_({nullable: false})
+    exports!: string
 
     @BigIntColumn_({nullable: false})
     fee!: bigint

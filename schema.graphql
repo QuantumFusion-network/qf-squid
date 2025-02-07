@@ -15,3 +15,25 @@ type Transfer @entity {
   amount: BigInt! @index
   fee: BigInt! # fee is calculated at the best effort and may be zero for some old extrinsics
 }
+
+type ProgramBlobUploaded @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  who: Account! @index
+  address: String! @index
+  exports: String!
+  fee: BigInt! # fee is calculated at the best effort and may be zero for some old extrinsics
+}
+
+type Calculated @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  who: Account! @index
+  address: String! @index
+  result: BigInt!
+  fee: BigInt! # fee is calculated at the best effort and may be zero for some old extrinsics
+}

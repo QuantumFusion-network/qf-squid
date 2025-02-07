@@ -24,7 +24,11 @@ export const processor = new SubstrateBatchProcessor()
         // rateLimit: 10 // requests per second, default is no limit
     })
     .addEvent({
-        name: [events.balances.transfer.name],
+        name: [
+            events.balances.transfer.name,
+            events.qfPolkaVm.programBlobUploaded.name,
+            events.qfPolkaVm.calculated.name,
+        ],
         extrinsic: true
     })
     .setFields({
