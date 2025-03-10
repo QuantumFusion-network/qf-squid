@@ -28,7 +28,7 @@ services:
       - qf-node
 
   qf-node:
-    image: andor/qf-node:997f600
+    image: qfnetwork/qf-node:0.1.8
     ports:
       # - "9944:9944"
       - "127.0.0.1:9715:9615" # prometheus metrics
