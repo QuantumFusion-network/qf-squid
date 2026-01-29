@@ -23,6 +23,10 @@ export const processor = new SubstrateBatchProcessor()
         // More RPC connection options at https://docs.subsquid.io/substrate-indexing/setup/general/#set-data-source
         // rateLimit: 10 // requests per second, default is no limit
     })
+    .addCall({
+        name: ["*"],
+        extrinsic: true
+    })
     .addEvent({
         name: [
             events.balances.transfer.name,
@@ -30,6 +34,15 @@ export const processor = new SubstrateBatchProcessor()
         extrinsic: true
     })
     .setFields({
+        call: {
+            extrinsicIndex: true,
+            address: true,
+            name: true,
+            args: true,
+            origin: true,
+            error: true,
+            success: true
+        },
         event: {
             args: true
         },
