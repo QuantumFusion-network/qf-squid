@@ -4,17 +4,20 @@ import * as ss58 from '@subsquid/ss58'
 import assert from 'assert'
 
 import {processor, ProcessorContext} from './processor'
-import {Account, Transfer} from './model'
+import {Account, Extrinsic, Transfer} from './model'
 import {events} from './types'
 
 processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     let transferEvents: TransferEvent[] = getTransferEvents(ctx)
+    let blockExtrinsics: BlockExtrinsic[] = getExtrinsics(ctx);
 
     let accounts: Map<string, Account> = await createAccounts(ctx, transferEvents)
     let transfers: Transfer[] = createTransfers(transferEvents, accounts)
+    let extrinsics: Extrinsic[] = createExtrinsics(blockExtrinsics, accounts)
 
     await ctx.store.upsert([...accounts.values()])
     await ctx.store.insert(transfers)
+    await ctx.store.insert(extrinsics)
 })
 
 interface TransferEvent {
@@ -26,6 +29,34 @@ interface TransferEvent {
     to: string
     amount: bigint
     fee?: bigint
+}
+
+interface BlockExtrinsic {
+    id: string;
+    blockHash: string;
+    blockNumber: number;
+    hash: string;
+    index: number;
+    success: boolean;
+    version: number;
+}
+
+function getExtrinsics(ctx: ProcessorContext<Store>): BlockExtrinsic[] {
+    const extrinsics: BlockExtrinsic[] = [];
+    for (let block of ctx.blocks) {
+        for (let extrinsic of block.extrinsics) {
+            extrinsics.push({
+                id: extrinsic.id,
+                blockHash: block.header.hash,
+                blockNumber: block.header.height,
+                hash: extrinsic.hash || '',
+                index: extrinsic.index,
+                success: extrinsic.success || false,
+                version: extrinsic.version,
+            });
+        }
+    }
+    return extrinsics;
 }
 
 function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
@@ -107,4 +138,21 @@ function createTransfers(transferEvents: TransferEvent[], accounts: Map<string, 
         }))
     }
     return transfers
+}
+
+function createExtrinsics(extrinsicEvents: BlockExtrinsic[], accounts: Map<string, Account>): Extrinsic[] {
+    let extrinsics: Extrinsic[] = []
+    for (let e of extrinsicEvents) {
+        let {id, blockHash, blockNumber, hash, index, success, version} = e
+        extrinsics.push(new Extrinsic({
+            id,
+            blockHash,
+            blockNumber,
+            hash,
+            index,
+            success,
+            version,
+        }))
+    }
+    return extrinsics
 }

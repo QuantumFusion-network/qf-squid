@@ -5,8 +5,7 @@
     "Balances": {
       "events": [
         "Transfer"
-      ],
-      "calls": true
+      ]
     }
   }
 }
