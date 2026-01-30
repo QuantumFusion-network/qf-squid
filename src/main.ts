@@ -28,33 +28,9 @@ interface TransferEvent {
     fee?: bigint
 }
 
-interface ProgramBlobUploadedEvent {
-    id: string
-    blockNumber: number
-    timestamp: Date
-    extrinsicHash?: string
-    who: string
-    address: string
-    exports: string[]
-    fee?: bigint
-}
-
-interface CalculatedEvent {
-    id: string
-    blockNumber: number
-    timestamp: Date
-    extrinsicHash?: string
-    who: string
-    address: string
-    result: number
-    fee?: bigint
-}
-
 function getTransferEvents(ctx: ProcessorContext<Store>): TransferEvent[] {
     // Filters and decodes the arriving events
     let transfers: TransferEvent[] = []
-    let uploads: ProgramBlobUploadedEvent[] = []
-    let calculations: CalculatedEvent[] = []
     for (let block of ctx.blocks) {
         for (let event of block.events) {
             if (event.name == events.balances.transfer.name) {
