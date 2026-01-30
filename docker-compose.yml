@@ -1,15 +1,26 @@
 services:
-  postgres:
+  db:
     image: postgres:18
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
+      POSTGRES_DB: squid
       POSTGRES_PASSWORD: postgres
     shm_size: 1gb
+    ports:
+      - "127.0.0.1:${DB_PORT}:5432"
     # command: ["postgres", "-c", "log_statement=all"]
     volumes:
-      - ./data/db:/var/lib/postgresql/docker
-    restart: unless-stopped
+      - ./data/db:/var/lib/postgresql
+
+  # Postgres Web UI at http://127.0.0.1:8080/
+  pgadmin:
+    image: dpage/pgadmin4:9
+    ports:
+      - "127.0.0.1:8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
 
   squid:
     build:
@@ -24,7 +35,7 @@ services:
       - "127.0.0.1:33015:33015" # prometheus metrics
     restart: unless-stopped
     depends_on:
-      - postgres
+      - db
       - qf-node
 
   qf-node:
@@ -55,5 +66,8 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://squid:squid@postgres:5432
       HASURA_GRAPHQL_ENABLE_CONSOLE: true
     depends_on:
-      - postgres
+      - db
     restart: unless-stopped
+
+volumes:
+  pgadmin-data:
