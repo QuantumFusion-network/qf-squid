@@ -26,8 +26,6 @@ export const processor = new SubstrateBatchProcessor()
     .addEvent({
         name: [
             events.balances.transfer.name,
-            events.qfPolkaVm.programBlobUploaded.name,
-            events.qfPolkaVm.calculated.name,
         ],
         extrinsic: true
     })
@@ -36,8 +34,13 @@ export const processor = new SubstrateBatchProcessor()
             args: true
         },
         extrinsic: {
+            index: true,
+            version: true,
+            fee: true,
+            tip: true,
+            error: true,
+            success: true,
             hash: true,
-            fee: true
         },
         block: {
             timestamp: true

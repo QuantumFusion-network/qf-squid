@@ -1,4 +1,3 @@
 export * from "./account.model"
 export * from "./transfer.model"
-export * from "./programBlobUploaded.model"
-export * from "./calculated.model"
+export * from "./extrinsic.model"

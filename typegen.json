@@ -1,23 +1,11 @@
 {
   "outDir": "src/types",
-  "specVersions": "qf-devnet-metadata.jsonl",
+  "specVersions": "specs/qf.jsonl",
   "pallets": {
     "Balances": {
       "events": [
         "Transfer"
-      ],
-      "calls": [],
-      "storage": [],
-      "constants": []
-    },
-    "QFPolkaVM": {
-      "events": [
-        "Calculated",
-        "ProgramBlobUploaded"
-      ],
-      "calls": [],
-      "storage": [],
-      "constants": []
+      ]
     }
   }
 }
