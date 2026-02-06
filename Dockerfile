@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm ci --production && \
+RUN npm install && \
     npm i -g @subsquid/cli && \
     sqd build
 
