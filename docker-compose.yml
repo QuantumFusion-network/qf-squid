@@ -28,7 +28,7 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
-  squid:
+  squid-processor:
     build: .
     environment:
       DB_URL: postgres://${DB_USER}:${DB_PASS}@${DB_HOST}:5432/${DB_NAME}
@@ -39,7 +39,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      db-migrations-runner:
+      squid-migration-apply:
         condition: service_completed_successfully
     command: ["sqd", "process:prod:nomigration"]
 
@@ -57,11 +57,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      db-migrations-runner:
+      squid-migration-apply:
         condition: service_completed_successfully
     command: ["sqd", "serve:prod"]
 
-  db-migrations-runner:
+  squid-migration-apply:
     build: .
     environment:
       DB_NAME: ${DB_NAME}
