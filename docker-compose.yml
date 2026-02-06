@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PASSWORD: ${DB_PASS}
     shm_size: 1gb
     ports:
       - "127.0.0.1:${DB_PORT}:5432"
@@ -26,7 +26,7 @@ services:
   squid:
     build: .
     environment:
-      DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}
+      DB_URL: postgres://${DB_USER}:${DB_PASS}@${DB_HOST}:5432/${DB_NAME}
       QF_NODE_RPC: ${QF_NODE_RPC}
     ports:
       - "127.0.0.1:33015:33015" # prometheus metrics
