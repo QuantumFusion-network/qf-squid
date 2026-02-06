@@ -11,6 +11,11 @@ services:
     # command: ["postgres", "-c", "log_statement=all"]
     volumes:
       - ./data/db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
 
   # Postgres Web UI at http://127.0.0.1:8080/
   pgadmin:
@@ -32,8 +37,10 @@ services:
       - "127.0.0.1:33015:33015" # prometheus metrics
     restart: unless-stopped
     depends_on:
-      - db
-      # - qf-node
+      db:
+        condition: service_healthy
+      db-migrations-runner:
+        condition: service_completed_successfully
 
   squid-graphql-server:
     build: .
@@ -46,6 +53,11 @@ services:
       GQL_PORT: ${GQL_PORT}
     ports:
       - "127.0.0.1:${GQL_PORT}:${GQL_PORT}" # GraphQL server
+    depends_on:
+      db:
+        condition: service_healthy
+      db-migrations-runner:
+        condition: service_completed_successfully
     command: ["sqd", "serve:prod"]
 
   db-migrations-runner:
@@ -56,6 +68,9 @@ services:
       DB_PASS: ${DB_PASS}
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
+    depends_on:
+      db:
+        condition: service_healthy
     command: ["sqd", "migration:apply"]
 
   # qf-node:
