@@ -1,12 +1,12 @@
-FROM docker.io/node:23-alpine3.20
-LABEL maintainer="Andrei Orlov <aaorlov1@gmail.com>"
+FROM node:22.16.0
+LABEL maintainer="QF Network <admin@qf.network>"
 LABEL description="QF Squid"
 
 WORKDIR /app
 
-COPY . . 
+COPY . .
 
-RUN npm install && \
+RUN npm ci --production && \
     npm i -g @subsquid/cli && \
     sqd build
 
