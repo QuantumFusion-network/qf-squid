@@ -3,6 +3,7 @@
 /lib
 /*Versions.jsonl
 
+.env
 Dockerfile
 docker-compose.yml
 data
