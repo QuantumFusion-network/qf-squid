@@ -30,12 +30,24 @@ services:
       GQL_PORT: ${GQL_PORT}
       QF_NODE_RPC: ${QF_NODE_RPC}
     ports:
-      - "127.0.0.1:${GQL_PORT}:${GQL_PORT}" # GraphQL server
       - "127.0.0.1:33015:33015" # prometheus metrics
     restart: unless-stopped
     depends_on:
       - db
-      - qf-node
+      # - qf-node
+
+  squid-graphql-server:
+    build: .
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      GQL_PORT: ${GQL_PORT}
+    ports:
+      - "127.0.0.1:${GQL_PORT}:${GQL_PORT}" # GraphQL server
+    command: ["sqd", "serve:prod"]
 
   # qf-node:
   #   image: qfnetwork/qf-node:0.1.8
