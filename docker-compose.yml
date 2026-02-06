@@ -49,7 +49,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
+      DB_PORT: 5432
       GQL_PORT: ${GQL_PORT}
     ports:
       - "127.0.0.1:${GQL_PORT}:${GQL_PORT}" # GraphQL server
@@ -67,7 +67,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
+      DB_PORT: 5432
     depends_on:
       db:
         condition: service_healthy
