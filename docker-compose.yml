@@ -53,7 +53,7 @@ services:
       DB_PORT: 5432
       GQL_PORT: ${GQL_PORT}
     ports:
-      - "127.0.0.1:${GQL_PORT}:${GQL_PORT}" # GraphQL server
+      - "${GQL_PORT}:${GQL_PORT}" # GraphQL server
     depends_on:
       db:
         condition: service_healthy
