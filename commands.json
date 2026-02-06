@@ -55,6 +55,11 @@
       "cmd": ["node", "lib/main.js"],
       "hidden": true
     },
+    "process:prod:nomigration": {
+      "description": "Start the squid processor",
+      "cmd": ["node", "lib/main.js"],
+      "hidden": true
+    },
     "serve": {
       "description": "Start the GraphQL API server",
       "cmd": ["squid-graphql-server"]
