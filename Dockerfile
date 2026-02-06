@@ -9,5 +9,3 @@ COPY . .
 RUN npm install && \
     npm i -g @subsquid/cli && \
     sqd build
-
-CMD ["sqd", "run", "."]
