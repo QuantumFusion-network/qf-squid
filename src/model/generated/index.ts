@@ -1,3 +1,5 @@
 export * from "./account.model"
 export * from "./transfer.model"
 export * from "./extrinsic.model"
+export * from "./claimCreation.model"
+export * from "./claim.model"

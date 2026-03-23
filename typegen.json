@@ -6,6 +6,14 @@
       "events": [
         "Transfer"
       ]
+    },
+    "Claims": {
+      "calls": [
+        "mint_claim"
+      ],
+      "events": [
+        "Claimed"
+      ]
     }
   }
 }

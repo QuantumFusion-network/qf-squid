@@ -1,5 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "@subsquid/typeorm-store"
 import {Transfer} from "./transfer.model"
+import {Claim} from "./claim.model"
+import {ClaimCreation} from "./claimCreation.model"
 
 @Entity_()
 export class Account {
@@ -18,4 +20,10 @@ export class Account {
 
     @OneToMany_(() => Transfer, e => e.from)
     transfersFrom!: Transfer[]
+
+    @OneToMany_(() => Claim, e => e.who)
+    claims!: Claim[]
+
+    @OneToMany_(() => ClaimCreation, e => e.originAccount)
+    claimCreationsByOrigin!: ClaimCreation[]
 }

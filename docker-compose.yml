@@ -36,6 +36,8 @@ services:
     ports:
       - "127.0.0.1:33015:33015" # prometheus metrics
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       db:
         condition: service_healthy
