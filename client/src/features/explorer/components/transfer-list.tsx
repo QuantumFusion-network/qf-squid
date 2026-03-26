@@ -13,7 +13,7 @@ function TransferCard({ transfer }: { transfer: TransferItem }) {
     <div className="rounded-lg border border-black/6 bg-white/60 p-4" data-testid="transfer-card">
       <div className="mb-4 flex items-center gap-2">
         <ArrowRightLeft className="size-4 text-muted-foreground" />
-        <span className="text-sm font-medium">Transfer event</span>
+        <span className="text-sm font-medium">Transfer</span>
       </div>
       <div className="grid gap-3 text-sm">
         <div>
@@ -34,7 +34,7 @@ function TransferCard({ transfer }: { transfer: TransferItem }) {
             <div className="font-medium">{formatFee(transfer.fee)}</div>
           </div>
           <div>
-            <div className="text-muted-foreground mb-1">Timestamp</div>
+            <div className="text-muted-foreground mb-1">Time</div>
             <div className="font-medium">{formatTimestamp(transfer.timestamp)}</div>
           </div>
         </div>
@@ -49,7 +49,7 @@ export function TransferList({ transfers }: TransferListProps) {
       <CardHeader>
         <CardTitle>Transfer details</CardTitle>
         <CardDescription>
-          One extrinsic can emit one or multiple transfer events.
+          A single transaction can contain one or more transfer records.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">

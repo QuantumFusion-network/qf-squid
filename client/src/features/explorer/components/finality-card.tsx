@@ -15,8 +15,8 @@ function renderState(result?: SecureFinalityResult) {
   if (!result) {
     return {
       icon: ShieldQuestion,
-      badge: <Badge data-testid="finality-badge">Loading</Badge>,
-      text: "Finality is loading for this transfer.",
+      badge: <Badge data-testid="finality-badge">Checking</Badge>,
+      text: "Checking the latest secure finality status for this transfer.",
     }
   }
 
@@ -24,7 +24,7 @@ function renderState(result?: SecureFinalityResult) {
     return {
       icon: ShieldCheck,
       badge: <Badge data-testid="finality-badge" variant="success">Securely finalized</Badge>,
-      text: `This transfer block is at or below secureUpTo ${result.secureUpTo}.`,
+      text: "This transfer block is already inside the current secure finality range.",
     }
   }
 
@@ -32,14 +32,14 @@ function renderState(result?: SecureFinalityResult) {
     return {
       icon: ShieldAlert,
       badge: <Badge data-testid="finality-badge" variant="warning">Pending secure finality</Badge>,
-      text: `This transfer is above secureUpTo ${result.secureUpTo} and needs more time.`,
+      text: "The network has not securely finalized this transfer block yet.",
     }
   }
 
   return {
     icon: ShieldQuestion,
     badge: <Badge data-testid="finality-badge" variant="neutral">Unavailable</Badge>,
-    text: "RPC finality data is temporarily unavailable.",
+    text: "Secure finality is temporarily unavailable.",
   }
 }
 
@@ -52,7 +52,7 @@ export function FinalityCard({ isLoading, result, onRefresh }: FinalityCardProps
       <CardHeader>
         <CardTitle>Secure finality</CardTitle>
         <CardDescription>
-          Current finality state at the moment of loading or refresh.
+          The latest secure finality status for this transfer.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -64,11 +64,11 @@ export function FinalityCard({ isLoading, result, onRefresh }: FinalityCardProps
         {result && (
           <div className="grid gap-3 rounded-lg border border-black/6 bg-white/55 p-4 text-sm sm:grid-cols-2">
             <div>
-              <div className="text-muted-foreground mb-1">Transfer block</div>
+              <div className="text-muted-foreground mb-1">Included in block</div>
               <div className="font-medium">{result.blockNumber}</div>
             </div>
             <div>
-              <div className="text-muted-foreground mb-1">secureUpTo</div>
+              <div className="text-muted-foreground mb-1">Network finalized through block</div>
               <div className="font-medium">{result.secureUpTo ?? "Unavailable"}</div>
             </div>
           </div>

@@ -22,9 +22,9 @@ export function DetailSummary({ detail }: DetailSummaryProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Transaction summary</CardTitle>
+        <CardTitle>Overview</CardTitle>
         <CardDescription>
-          Detail page for the selected transfer extrinsic.
+          Core details for the selected transfer.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -32,15 +32,15 @@ export function DetailSummary({ detail }: DetailSummaryProps) {
           <Badge variant={extrinsic.success ? "success" : "destructive"}>
             {extrinsic.success ? "Success" : "Failed"}
           </Badge>
-          <Badge>{detail.kind === "hash" ? "Search by hash" : "Search by id"}</Badge>
+          <Badge>{detail.kind === "hash" ? "Hash lookup" : "ID lookup"}</Badge>
         </div>
-        <SummaryRow label="Extrinsic id" value={extrinsic.id} mono />
-        <SummaryRow label="Extrinsic hash" value={extrinsic.hash} mono />
-        <SummaryRow label="Block number" value={String(extrinsic.blockNumber)} />
+        <SummaryRow label="Internal ID" value={extrinsic.id} mono />
+        <SummaryRow label="Transaction hash" value={extrinsic.hash} mono />
+        <SummaryRow label="Block" value={String(extrinsic.blockNumber)} />
         <SummaryRow label="Block hash" value={extrinsic.blockHash} mono />
-        <SummaryRow label="Extrinsic index" value={String(extrinsic.index)} />
+        <SummaryRow label="Position in block" value={String(extrinsic.index)} />
         <SummaryRow label="Version" value={String(extrinsic.version)} />
-        <SummaryRow label="Timestamp" value={formatTimestamp(detail.transfers[0].timestamp)} />
+        <SummaryRow label="Time" value={formatTimestamp(detail.transfers[0].timestamp)} />
       </CardContent>
     </Card>
   )

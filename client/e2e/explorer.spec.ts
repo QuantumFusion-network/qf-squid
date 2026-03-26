@@ -7,11 +7,11 @@ const UNAVAILABLE_HASH = "0x3333333333333333333333333333333333333333333333333333
 test("search by hash renders multi-transfer detail page", async ({ page }) => {
   await page.goto("/")
 
-  await page.getByLabel("Search extrinsic").fill(FINALIZED_HASH)
+  await page.getByLabel("Search transfer").fill(FINALIZED_HASH)
   await page.getByRole("button", { name: "Search" }).click()
 
-  await expect(page.getByText("Transaction summary")).toBeVisible()
-  await expect(page.getByText("Transfer details")).toBeVisible()
+  await expect(page.getByText("Overview")).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Transfer details" }).last()).toBeVisible()
   await expect(page.getByTestId("finality-badge")).toHaveText("Securely finalized")
   await expect(page.getByTestId("transfer-card")).toHaveCount(2)
 })
