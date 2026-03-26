@@ -3,6 +3,8 @@ type Account @entity {
   id: ID!
   transfersTo: [Transfer!] @derivedFrom(field: "to")
   transfersFrom: [Transfer!] @derivedFrom(field: "from")
+  claims: [Claim!] @derivedFrom(field: "who")
+  claimCreationsByOrigin: [ClaimCreation!] @derivedFrom(field: "originAccount")
 }
 
 type Transfer @entity {
@@ -24,4 +26,28 @@ type Extrinsic @entity {
   index: Int!
   success: Boolean! @index
   version: Int!
+}
+
+type ClaimCreation @entity {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: DateTime! @index
+  extrinsicHash: String @index
+  originAccount: Account
+  ethereumAccount: String! @index
+  value: BigInt!
+  vestingStart: BigInt
+  vestingPeriod: BigInt
+  vestingPerPeriod: BigInt
+  statement: String @index
+}
+
+type Claim @entity {
+  id: ID!
+  blockNumber: Int! @index
+  extrinsicHash: String @index
+  who: Account!
+  ethereumAccount: String! @index
+  amount: BigInt!
+  timestamp: DateTime! @index
 }

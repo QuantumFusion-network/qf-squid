@@ -9,7 +9,7 @@ import {
     Extrinsic as _Extrinsic
 } from '@subsquid/substrate-processor'
 
-import {events} from './types'
+import {calls, events} from './types'
 
 export const processor = new SubstrateBatchProcessor()
     // Lookup archive by the network name in Subsquid registry
@@ -26,10 +26,22 @@ export const processor = new SubstrateBatchProcessor()
     .addEvent({
         name: [
             events.balances.transfer.name,
+            events.claims.claimed.name
+        ],
+        extrinsic: true
+    })
+    .addCall({
+        name: [
+            calls.claims.mintClaim.name,
         ],
         extrinsic: true
     })
     .setFields({
+        call: {
+            args: true,
+            origin: true,
+            success: true
+        },
         event: {
             args: true
         },
