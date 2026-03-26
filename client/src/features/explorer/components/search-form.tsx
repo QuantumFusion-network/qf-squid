@@ -26,6 +26,8 @@ export function SearchForm({ defaultValue = "" }: SearchFormProps) {
       <Input
         aria-label="Search extrinsic"
         className="h-12 flex-1"
+        autoCapitalize="off"
+        autoCorrect="off"
         placeholder="Enter extrinsic hash or id"
         value={value}
         onChange={(event) => setValue(event.target.value)}

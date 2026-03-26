@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { formatHash, formatTimestamp } from "@/features/explorer/lib/format"
+import { formatTimestamp } from "@/features/explorer/lib/format"
 import type { ExplorerDetail } from "@/features/explorer/lib/types"
 
 interface DetailSummaryProps {
@@ -37,7 +37,7 @@ export function DetailSummary({ detail }: DetailSummaryProps) {
         <SummaryRow label="Extrinsic id" value={extrinsic.id} mono />
         <SummaryRow label="Extrinsic hash" value={extrinsic.hash} mono />
         <SummaryRow label="Block number" value={String(extrinsic.blockNumber)} />
-        <SummaryRow label="Block hash" value={formatHash(extrinsic.blockHash)} mono />
+        <SummaryRow label="Block hash" value={extrinsic.blockHash} mono />
         <SummaryRow label="Extrinsic index" value={String(extrinsic.index)} />
         <SummaryRow label="Version" value={String(extrinsic.version)} />
         <SummaryRow label="Timestamp" value={formatTimestamp(detail.transfers[0].timestamp)} />

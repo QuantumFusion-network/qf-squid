@@ -61,6 +61,18 @@ export function FinalityCard({ isLoading, result, onRefresh }: FinalityCardProps
           {state.badge}
         </div>
         <p className="text-muted-foreground text-sm">{state.text}</p>
+        {result && (
+          <div className="grid gap-3 rounded-lg border border-black/6 bg-white/55 p-4 text-sm sm:grid-cols-2">
+            <div>
+              <div className="text-muted-foreground mb-1">Transfer block</div>
+              <div className="font-medium">{result.blockNumber}</div>
+            </div>
+            <div>
+              <div className="text-muted-foreground mb-1">secureUpTo</div>
+              <div className="font-medium">{result.secureUpTo ?? "Unavailable"}</div>
+            </div>
+          </div>
+        )}
         <Button
           aria-label="Refresh finality"
           variant="outline"
