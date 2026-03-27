@@ -1,0 +1,8 @@
+export const appEnv = {
+  appVersion: __APP_VERSION__,
+  graphqlEndpoint: import.meta.env.VITE_GRAPHQL_ENDPOINT || "",
+  rpcEndpoint: import.meta.env.VITE_RPC_ENDPOINT || "",
+  tokenSymbol: import.meta.env.VITE_TOKEN_SYMBOL || "QF",
+  tokenDecimals: Number(import.meta.env.VITE_TOKEN_DECIMALS || "18"),
+  useMock: import.meta.env.VITE_USE_MOCK === "true",
+} as const
