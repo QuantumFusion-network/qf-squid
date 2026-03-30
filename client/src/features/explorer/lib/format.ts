@@ -1,6 +1,7 @@
-import { appEnv } from "@/features/explorer/lib/env"
+import { DEFAULT_CHAIN_PROPERTIES } from "@/features/explorer/lib/types"
+import type { ChainProperties } from "@/features/explorer/lib/types"
 
-function formatUnits(value: string, decimals = appEnv.tokenDecimals) {
+function formatUnits(value: string, decimals = DEFAULT_CHAIN_PROPERTIES.tokenDecimals) {
   const amount = BigInt(value)
   const divisor = 10n ** BigInt(decimals)
   const whole = amount / divisor
@@ -10,12 +11,12 @@ function formatUnits(value: string, decimals = appEnv.tokenDecimals) {
   return trimmed ? `${whole.toString()}.${trimmed.slice(0, 6)}` : whole.toString()
 }
 
-export function formatAmount(value: string) {
-  return `${formatUnits(value)} ${appEnv.tokenSymbol}`
+export function formatAmount(value: string, chainProperties: ChainProperties = DEFAULT_CHAIN_PROPERTIES) {
+  return `${formatUnits(value, chainProperties.tokenDecimals)} ${chainProperties.tokenSymbol}`
 }
 
-export function formatFee(value: string) {
-  return `${formatUnits(value)} ${appEnv.tokenSymbol}`
+export function formatFee(value: string, chainProperties: ChainProperties = DEFAULT_CHAIN_PROPERTIES) {
+  return `${formatUnits(value, chainProperties.tokenDecimals)} ${chainProperties.tokenSymbol}`
 }
 
 export function formatTimestamp(value: string) {

@@ -1,5 +1,15 @@
 export type SearchKind = "hash" | "id"
 
+export interface ChainProperties {
+  tokenSymbol: string
+  tokenDecimals: number
+}
+
+export const DEFAULT_CHAIN_PROPERTIES: ChainProperties = {
+  tokenSymbol: "QF",
+  tokenDecimals: 18,
+}
+
 export interface AccountRef {
   id: string
 }
@@ -32,10 +42,12 @@ export interface ExplorerDetail {
   transfers: TransferItem[]
 }
 
-export type SecureFinalityState = "secure" | "pending" | "unavailable"
+export type SecureFinalityState = "confirmed" | "pending" | "unavailable"
 
 export interface SecureFinalityResult {
   state: SecureFinalityState
   blockNumber: number
   secureUpTo?: number
+  bestBlock?: number
+  confirmations?: number
 }

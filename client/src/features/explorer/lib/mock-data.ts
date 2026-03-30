@@ -1,4 +1,5 @@
-import type { ExplorerDetail, ExtrinsicSummary, SecureFinalityResult, TransferItem } from "@/features/explorer/lib/types"
+import { DEFAULT_CHAIN_PROPERTIES } from "@/features/explorer/lib/types"
+import type { ChainProperties, ExplorerDetail, ExtrinsicSummary, SecureFinalityResult, TransferItem } from "@/features/explorer/lib/types"
 import { computeSecureFinality } from "@/features/explorer/lib/finality"
 import { detectSearchKind } from "@/features/explorer/lib/search"
 
@@ -154,12 +155,16 @@ export async function loadMockSecureFinality(blockNumber: number): Promise<Secur
   finalityRequestCounts.set(blockNumber, count)
 
   if (blockNumber === pendingExtrinsic.blockNumber && count > 1) {
-    return computeSecureFinality(blockNumber, 300)
+    return computeSecureFinality(blockNumber, 300, 305)
   }
 
   if (blockNumber === pendingExtrinsic.blockNumber) {
-    return computeSecureFinality(blockNumber, 200)
+    return computeSecureFinality(blockNumber, 200, 255)
   }
 
-  return computeSecureFinality(blockNumber, 150)
+  return computeSecureFinality(blockNumber, 150, 180)
+}
+
+export async function loadMockChainProperties(): Promise<ChainProperties> {
+  return DEFAULT_CHAIN_PROPERTIES
 }

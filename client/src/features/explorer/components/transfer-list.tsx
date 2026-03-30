@@ -2,13 +2,21 @@ import { ArrowRightLeft } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { formatAmount, formatFee, formatTimestamp } from "@/features/explorer/lib/format"
-import type { TransferItem } from "@/features/explorer/lib/types"
+import { DEFAULT_CHAIN_PROPERTIES } from "@/features/explorer/lib/types"
+import type { ChainProperties, TransferItem } from "@/features/explorer/lib/types"
 
 interface TransferListProps {
   transfers: TransferItem[]
+  chainProperties?: ChainProperties
 }
 
-function TransferCard({ transfer }: { transfer: TransferItem }) {
+function TransferCard({
+  transfer,
+  chainProperties,
+}: {
+  transfer: TransferItem
+  chainProperties: ChainProperties
+}) {
   return (
     <div className="rounded-lg border border-black/6 bg-white/60 p-4" data-testid="transfer-card">
       <div className="mb-4 flex items-center gap-2">
@@ -27,11 +35,11 @@ function TransferCard({ transfer }: { transfer: TransferItem }) {
         <div className="grid gap-3 sm:grid-cols-3">
           <div>
             <div className="text-muted-foreground mb-1">Amount</div>
-            <div className="font-medium">{formatAmount(transfer.amount)}</div>
+            <div className="font-medium">{formatAmount(transfer.amount, chainProperties)}</div>
           </div>
           <div>
             <div className="text-muted-foreground mb-1">Fee</div>
-            <div className="font-medium">{formatFee(transfer.fee)}</div>
+            <div className="font-medium">{formatFee(transfer.fee, chainProperties)}</div>
           </div>
           <div>
             <div className="text-muted-foreground mb-1">Time</div>
@@ -43,7 +51,7 @@ function TransferCard({ transfer }: { transfer: TransferItem }) {
   )
 }
 
-export function TransferList({ transfers }: TransferListProps) {
+export function TransferList({ transfers, chainProperties = DEFAULT_CHAIN_PROPERTIES }: TransferListProps) {
   return (
     <Card>
       <CardHeader>
@@ -54,7 +62,7 @@ export function TransferList({ transfers }: TransferListProps) {
       </CardHeader>
       <CardContent className="space-y-3">
         {transfers.map((transfer) => (
-          <TransferCard key={transfer.id} transfer={transfer} />
+          <TransferCard key={transfer.id} transfer={transfer} chainProperties={chainProperties} />
         ))}
       </CardContent>
     </Card>

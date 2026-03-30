@@ -6,7 +6,7 @@ export function BrandLockup({ compact = false }: BrandLockupProps) {
   return (
     <div className="flex items-center gap-3">
       <img
-        src="/brand/quantum-fusion.png"
+        src="/brand/qf-network.png"
         alt="QF Network"
         className={compact ? "h-8 w-auto" : "h-10 w-auto sm:h-12"}
       />

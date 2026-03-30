@@ -1,5 +1,5 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { ChevronLeft, Loader2, Sparkles } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
+import { ChevronLeft, Sparkles } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 
@@ -7,18 +7,17 @@ import { BrandLockup } from "@/components/brand-lockup"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DetailSummary } from "@/features/explorer/components/detail-summary"
-import { FinalityCard } from "@/features/explorer/components/finality-card"
 import { SearchForm } from "@/features/explorer/components/search-form"
 import { StatePanel } from "@/features/explorer/components/state-panel"
 import { TempTestPanel } from "@/features/explorer/components/temp-test-panel"
 import { TransferList } from "@/features/explorer/components/transfer-list"
 import { loadExplorerDetail } from "@/features/explorer/lib/api"
-import { loadSecureFinality } from "@/features/explorer/lib/rpc"
+import { loadChainProperties, loadSecureFinality } from "@/features/explorer/lib/rpc"
+import { DEFAULT_CHAIN_PROPERTIES } from "@/features/explorer/lib/types"
 
 export function TxDetailPage() {
   const { query = "" } = useParams()
   const decodedQuery = decodeURIComponent(query)
-  const queryClient = useQueryClient()
   const [searchValue, setSearchValue] = useState(decodedQuery)
 
   useEffect(() => {
@@ -30,18 +29,19 @@ export function TxDetailPage() {
     queryFn: () => loadExplorerDetail(decodedQuery),
   })
 
-  const finalityQuery = useQuery({
-    queryKey: ["secure-finality", detailQuery.data?.extrinsic.hash],
+  const confirmationQuery = useQuery({
+    queryKey: ["confirmation-status", detailQuery.data?.extrinsic.hash],
     queryFn: () => loadSecureFinality(detailQuery.data!.extrinsic.blockNumber),
     enabled: !!detailQuery.data,
     retry: false,
   })
 
-  function refreshFinality() {
-    void queryClient.invalidateQueries({
-      queryKey: ["secure-finality", detailQuery.data?.extrinsic.hash],
-    })
-  }
+  const chainPropertiesQuery = useQuery({
+    queryKey: ["chain-properties"],
+    queryFn: loadChainProperties,
+    enabled: !!detailQuery.data,
+    retry: false,
+  })
 
   return (
     <main className="app-shell gap-6">
@@ -101,25 +101,20 @@ export function TxDetailPage() {
             </div>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="space-y-6">
-              <DetailSummary detail={detailQuery.data} />
-              <TransferList transfers={detailQuery.data.transfers} />
-            </div>
-            <div className="space-y-6">
-              <FinalityCard
-                isLoading={finalityQuery.isLoading || finalityQuery.isFetching}
-                result={finalityQuery.error ? { state: "unavailable", blockNumber: detailQuery.data.extrinsic.blockNumber } : finalityQuery.data}
-                onRefresh={refreshFinality}
-              />
-              <div className="rounded-xl border border-black/6 bg-white/65 p-5 text-sm text-muted-foreground">
-                <div className="mb-2 flex items-center gap-2 font-medium text-foreground">
-                  <Loader2 className="size-4" />
-                  Search value
-                </div>
-                <p className="hash-text font-mono text-xs sm:text-sm">{decodedQuery}</p>
-              </div>
-            </div>
+          <div className="space-y-6">
+            <DetailSummary
+              detail={detailQuery.data}
+              confirmation={
+                confirmationQuery.error
+                  ? { state: "unavailable", blockNumber: detailQuery.data.extrinsic.blockNumber }
+                  : confirmationQuery.data
+              }
+              isConfirmationLoading={confirmationQuery.isLoading || confirmationQuery.isFetching}
+            />
+            <TransferList
+              transfers={detailQuery.data.transfers}
+              chainProperties={chainPropertiesQuery.data ?? DEFAULT_CHAIN_PROPERTIES}
+            />
           </div>
         </div>
       )}

@@ -26,7 +26,7 @@ export function SearchPage() {
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
               Enter a transaction hash or internal ID to view transfer details and the latest
-              secure finality status.
+              confirmation status.
             </p>
           </div>
           <div className="rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm backdrop-blur-sm sm:p-5">
@@ -38,11 +38,11 @@ export function SearchPage() {
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Network className="size-3.5" />
-                Live transfer and finality data
+                Live transfer and confirmation data
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Waves className="size-3.5" />
-                Refresh finality on demand
+                Result and confirmations in one view
               </span>
             </div>
           </div>
@@ -65,7 +65,7 @@ export function SearchPage() {
               <div className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                 Step 3
               </div>
-              <div className="font-medium">Check the latest finality status</div>
+              <div className="font-medium">Check the latest confirmations</div>
             </div>
           </div>
         </section>
@@ -74,7 +74,7 @@ export function SearchPage() {
           <CardHeader>
             <CardTitle>What you can check</CardTitle>
             <CardDescription>
-              The details page combines indexed transfer data with the latest network finality
+              The details page combines indexed transfer data with the latest network confirmation
               status.
             </CardDescription>
           </CardHeader>
@@ -91,10 +91,10 @@ export function SearchPage() {
             <div className="rounded-lg border border-black/6 bg-white/60 p-4">
               <div className="mb-2 flex items-center gap-2 font-medium">
                 <Network className="size-4" />
-                Finality data
+                Confirmation data
               </div>
               <p className="text-muted-foreground">
-                Check whether the network has already securely finalized the transfer block.
+                Check whether the transfer is still pending confirmations or already confirmed.
               </p>
             </div>
             <div className="rounded-lg border border-dashed border-black/10 bg-amber-50/60 p-4 text-sm text-muted-foreground">
@@ -102,7 +102,7 @@ export function SearchPage() {
                 <MoveRight className="size-4" />
                 Good to know
               </div>
-              A transfer can already be successful while secure finality is still pending.
+              A transfer can already be successful while confirmations are still pending.
             </div>
           </CardContent>
         </Card>

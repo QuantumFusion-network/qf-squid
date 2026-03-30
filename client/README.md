@@ -19,10 +19,9 @@ Copy `.env.example` and override values if needed:
 ```bash
 VITE_GRAPHQL_ENDPOINT=
 VITE_RPC_ENDPOINT=
-VITE_TOKEN_SYMBOL=QF
-VITE_TOKEN_DECIMALS=18
 VITE_USE_MOCK=false
 ```
 
 Use `VITE_USE_MOCK=true` for deterministic local UI and Playwright runs.
 Set `VITE_GRAPHQL_ENDPOINT` and `VITE_RPC_ENDPOINT` locally before using live data.
+Token symbol and decimals are read from chain RPC properties.
