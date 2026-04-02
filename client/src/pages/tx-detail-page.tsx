@@ -12,7 +12,7 @@ import { StatePanel } from "@/features/explorer/components/state-panel"
 import { TempTestPanel } from "@/features/explorer/components/temp-test-panel"
 import { TransferList } from "@/features/explorer/components/transfer-list"
 import { loadExplorerDetail } from "@/features/explorer/lib/api"
-import { loadChainProperties, loadSecureFinality } from "@/features/explorer/lib/rpc"
+import { loadChainProperties } from "@/features/explorer/lib/rpc"
 import { DEFAULT_CHAIN_PROPERTIES } from "@/features/explorer/lib/types"
 
 export function TxDetailPage() {
@@ -27,13 +27,6 @@ export function TxDetailPage() {
   const detailQuery = useQuery({
     queryKey: ["explorer-detail", decodedQuery],
     queryFn: () => loadExplorerDetail(decodedQuery),
-  })
-
-  const confirmationQuery = useQuery({
-    queryKey: ["confirmation-status", detailQuery.data?.extrinsic.hash],
-    queryFn: () => loadSecureFinality(detailQuery.data!.extrinsic.blockNumber),
-    enabled: !!detailQuery.data,
-    retry: false,
   })
 
   const chainPropertiesQuery = useQuery({
@@ -102,15 +95,7 @@ export function TxDetailPage() {
           </div>
 
           <div className="space-y-6">
-            <DetailSummary
-              detail={detailQuery.data}
-              confirmation={
-                confirmationQuery.error
-                  ? { state: "unavailable", blockNumber: detailQuery.data.extrinsic.blockNumber }
-                  : confirmationQuery.data
-              }
-              isConfirmationLoading={confirmationQuery.isLoading || confirmationQuery.isFetching}
-            />
+            <DetailSummary detail={detailQuery.data} />
             <TransferList
               transfers={detailQuery.data.transfers}
               chainProperties={chainPropertiesQuery.data ?? DEFAULT_CHAIN_PROPERTIES}

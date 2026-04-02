@@ -1,8 +1,7 @@
 import { appEnv } from "@/features/explorer/lib/env"
-import { computeSecureFinality } from "@/features/explorer/lib/finality"
-import { loadMockChainProperties, loadMockSecureFinality } from "@/features/explorer/lib/mock-data"
+import { loadMockChainProperties } from "@/features/explorer/lib/mock-data"
 import { DEFAULT_CHAIN_PROPERTIES } from "@/features/explorer/lib/types"
-import type { ChainProperties, SecureFinalityResult } from "@/features/explorer/lib/types"
+import type { ChainProperties } from "@/features/explorer/lib/types"
 
 let apiPromise: Promise<any> | undefined
 
@@ -44,24 +43,4 @@ export async function loadChainProperties(): Promise<ChainProperties> {
     tokenSymbol: String(tokenSymbol),
     tokenDecimals: Number.isNaN(tokenDecimals) ? DEFAULT_CHAIN_PROPERTIES.tokenDecimals : tokenDecimals,
   }
-}
-
-export async function loadSecureFinality(blockNumber: number): Promise<SecureFinalityResult> {
-  if (appEnv.useMock) {
-    return loadMockSecureFinality(blockNumber)
-  }
-
-  const api = await getApi()
-  const secureUpToQuery = api.query?.spinAnchoring?.secureUpTo
-  const bestHeader = await api.rpc.chain.getHeader()
-  const bestBlock = Number(bestHeader.number.toString())
-
-  if (!secureUpToQuery) {
-    return computeSecureFinality(blockNumber, null, bestBlock)
-  }
-
-  const secureUpToValue = await secureUpToQuery()
-  const secureUpTo = Number(secureUpToValue.toString())
-
-  return computeSecureFinality(blockNumber, secureUpTo, bestBlock)
 }

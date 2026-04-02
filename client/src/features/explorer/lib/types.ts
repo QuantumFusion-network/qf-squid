@@ -41,13 +41,3 @@ export interface ExplorerDetail {
   extrinsic: ExtrinsicSummary
   transfers: TransferItem[]
 }
-
-export type SecureFinalityState = "confirmed" | "pending" | "unavailable"
-
-export interface SecureFinalityResult {
-  state: SecureFinalityState
-  blockNumber: number
-  secureUpTo?: number
-  bestBlock?: number
-  confirmations?: number
-}
