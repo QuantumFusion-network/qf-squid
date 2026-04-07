@@ -32,9 +32,9 @@ export function DetailSummary({ detail }: DetailSummaryProps) {
           <Badge data-testid="result-badge" variant={extrinsic.success ? "success" : "destructive"}>
             {extrinsic.success ? "Success" : "Failed"}
           </Badge>
-          <Badge>{detail.kind === "hash" ? "Hash lookup" : "ID lookup"}</Badge>
+          <Badge>{detail.kind === "hash" ? "Transaction hash" : "Extrinsic ID"}</Badge>
         </div>
-        <SummaryRow label="Internal ID" value={extrinsic.id} mono />
+        <SummaryRow label="Extrinsic ID" value={extrinsic.id} mono />
         <SummaryRow label="Transaction hash" value={extrinsic.hash} mono />
         <SummaryRow label="Block" value={String(extrinsic.blockNumber)} />
         <SummaryRow label="Block hash" value={extrinsic.blockHash} mono />

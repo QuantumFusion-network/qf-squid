@@ -26,7 +26,7 @@ export function SearchPage() {
               Find transfer details
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Search by transaction hash or Extrinsic ID.
+              Search and view transfer details in one place.
             </p>
           </div>
           <div className="rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm backdrop-blur-sm sm:p-5">
@@ -34,15 +34,15 @@ export function SearchPage() {
             <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-muted-foreground sm:text-sm">
               <span className="inline-flex items-center gap-1.5">
                 <ShieldCheck className="size-3.5" />
-                Transfer-focused lookup
+                Find transfer records
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Network className="size-3.5" />
-                Live indexed transfer data
+                Live transfer details
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Waves className="size-3.5" />
-                Status, block, and value details
+                Status, block, and amount
               </span>
             </div>
           </div>
@@ -53,26 +53,26 @@ export function SearchPage() {
               <div className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                 Step 1
               </div>
-              <div className="font-medium">Enter a hash or ID</div>
+              <div className="font-medium">Enter a transaction hash or Extrinsic ID</div>
             </div>
             <div className="rounded-xl border border-black/6 bg-white/60 p-4">
               <div className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                 Step 2
               </div>
-              <div className="font-medium">View transfer details</div>
+              <div className="font-medium">View the transfer details</div>
             </div>
             <div className="rounded-xl border border-black/6 bg-white/60 p-4">
               <div className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                 Step 3
               </div>
-              <div className="font-medium">Review the transfer status</div>
+              <div className="font-medium">Check the transfer status</div>
             </div>
           </div>
         </section>
 
         <Card className="self-start">
           <CardHeader>
-            <CardTitle>What you can check</CardTitle>
+            <CardTitle>What you'll see</CardTitle>
             <CardDescription>
               Check transfer status, amount, block details, and addresses.
             </CardDescription>
@@ -81,7 +81,7 @@ export function SearchPage() {
             <div className="rounded-lg border border-black/6 bg-white/60 p-4">
               <div className="mb-2 flex items-center gap-2 font-medium">
                 <Network className="size-4" />
-                Transfer data
+                Transfer details
               </div>
               <p className="text-muted-foreground">
                 View the transfer hash, block, status, addresses, amount, fee, and time.
@@ -90,7 +90,7 @@ export function SearchPage() {
             <div className="rounded-lg border border-black/6 bg-white/60 p-4">
               <div className="mb-2 flex items-center gap-2 font-medium">
                 <ShieldCheck className="size-4" />
-                Search flow
+                How to search
               </div>
               <p className="text-muted-foreground">
                 Search by transaction hash or Extrinsic ID to open the transfer details page.
@@ -99,7 +99,7 @@ export function SearchPage() {
             <div className="rounded-lg border border-dashed border-black/10 bg-amber-50/60 p-4 text-sm text-muted-foreground">
               <div className="mb-2 flex items-center gap-2 font-medium text-foreground">
                 <MoveRight className="size-4" />
-                Good to know
+                Current scope
               </div>
               This explorer currently focuses on transfer transactions.
             </div>

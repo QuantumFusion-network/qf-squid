@@ -37,6 +37,9 @@ export function TxDetailPage() {
     retry: false,
   })
 
+  const transferCount = detailQuery.data?.transfers.length ?? 0
+  const transferCountLabel = transferCount === 1 ? "1 transfer" : `${transferCount} transfers`
+
   return (
     <main className="app-shell gap-6">
       <div className="flex flex-col gap-4">
@@ -67,7 +70,7 @@ export function TxDetailPage() {
       ) : !detailQuery.data ? (
         <StatePanel
           title="Transfer not found"
-          description="No transfer details were found for this hash or ID."
+          description="No transfer details were found for this query."
         />
       ) : (
         <div className="space-y-6">
@@ -76,7 +79,7 @@ export function TxDetailPage() {
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 rounded-full border border-black/8 bg-black/3 px-3 py-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                   <Sparkles className="size-3.5" />
-                  Transfer details
+                  Transfer
                 </div>
                 <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
                   Transfer details
@@ -86,11 +89,11 @@ export function TxDetailPage() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Badge>{detailQuery.data.kind === "hash" ? "Hash lookup" : "ID lookup"}</Badge>
+                <Badge>{detailQuery.data.kind === "hash" ? "Transaction hash" : "Extrinsic ID"}</Badge>
                 <Badge variant={detailQuery.data.extrinsic.success ? "success" : "destructive"}>
                   {detailQuery.data.extrinsic.success ? "Success" : "Failed"}
                 </Badge>
-                <Badge>{detailQuery.data.transfers.length} transfer event(s)</Badge>
+                <Badge>{transferCountLabel}</Badge>
               </div>
             </div>
           </div>
