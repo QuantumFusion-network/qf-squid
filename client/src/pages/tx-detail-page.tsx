@@ -12,6 +12,7 @@ import { StatePanel } from "@/features/explorer/components/state-panel"
 import { TempTestPanel } from "@/features/explorer/components/temp-test-panel"
 import { TransferList } from "@/features/explorer/components/transfer-list"
 import { loadExplorerDetail } from "@/features/explorer/lib/api"
+import { appEnv } from "@/features/explorer/lib/env"
 import { loadChainProperties } from "@/features/explorer/lib/rpc"
 import { DEFAULT_CHAIN_PROPERTIES } from "@/features/explorer/lib/types"
 
@@ -49,7 +50,7 @@ export function TxDetailPage() {
           </Button>
         </div>
         <SearchForm value={searchValue} onValueChange={setSearchValue} />
-        <TempTestPanel onSelect={setSearchValue} />
+        {appEnv.enableTempTestPanel ? <TempTestPanel onSelect={setSearchValue} /> : null}
       </div>
 
       {detailQuery.isLoading ? (

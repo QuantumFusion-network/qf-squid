@@ -5,6 +5,7 @@ import { BrandLockup } from "@/components/brand-lockup"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { SearchForm } from "@/features/explorer/components/search-form"
 import { TempTestPanel } from "@/features/explorer/components/temp-test-panel"
+import { appEnv } from "@/features/explorer/lib/env"
 
 export function SearchPage() {
   const [searchValue, setSearchValue] = useState("")
@@ -45,7 +46,7 @@ export function SearchPage() {
               </span>
             </div>
           </div>
-          <TempTestPanel onSelect={setSearchValue} />
+          {appEnv.enableTempTestPanel ? <TempTestPanel onSelect={setSearchValue} /> : null}
 
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-black/6 bg-white/60 p-4">
