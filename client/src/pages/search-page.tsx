@@ -73,7 +73,7 @@ export function SearchPage() {
           <CardHeader>
             <CardTitle>What you can check</CardTitle>
             <CardDescription>
-              The details page shows the indexed transfer record returned by GraphQL.
+              Check transfer status, amount, block details, and addresses.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
@@ -92,7 +92,7 @@ export function SearchPage() {
                 Search flow
               </div>
               <p className="text-muted-foreground">
-                Search by hash or ID and open the matching transfer detail page.
+                Search by transaction hash or Extrinsic ID to open the transfer details page.
               </p>
             </div>
             <div className="rounded-lg border border-dashed border-black/10 bg-amber-50/60 p-4 text-sm text-muted-foreground">
@@ -100,7 +100,7 @@ export function SearchPage() {
                 <MoveRight className="size-4" />
                 Good to know
               </div>
-              This explorer focuses on transfer details returned by the current GraphQL indexer.
+              This explorer currently focuses on transfer transactions.
             </div>
           </CardContent>
         </Card>
