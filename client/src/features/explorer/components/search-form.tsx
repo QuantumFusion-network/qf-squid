@@ -51,7 +51,7 @@ export function SearchForm({
         className="h-12 flex-1"
         autoCapitalize="off"
         autoCorrect="off"
-        placeholder="Enter transfer hash or internal ID"
+        placeholder="Transaction hash or Extrinsic ID"
         value={currentValue}
         onChange={(event) => updateValue(event.target.value)}
       />

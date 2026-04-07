@@ -22,10 +22,10 @@ export function SearchPage() {
           </div>
           <div className="space-y-5">
             <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl xl:text-6xl">
-              Look up transfer details by hash or ID.
+              Find transfer details
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Enter a transaction hash or internal ID to view transfer details from the indexer.
+              Search by transaction hash or Extrinsic ID.
             </p>
           </div>
           <div className="rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm backdrop-blur-sm sm:p-5">
