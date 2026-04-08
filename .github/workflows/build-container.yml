@@ -1,0 +1,46 @@
+name: Build and Push Container
+
+on:
+  pull_request:
+    paths:
+      - Containerfile
+  push:
+    branches:
+      - main
+    paths:
+      - Containerfile
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v6
+
+    - name: Get Node version
+      id: get-version
+      run: |
+        NODE_VERSION=$(awk -F= '/ARG NODE_VERSION=/{print $2}' Containerfile)
+        echo "node_version=$NODE_VERSION" >> "$GITHUB_OUTPUT"
+
+    - name: Build image
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: theqfnetwork/qf-squid
+        tags: ${{ github.sha }} latest
+        containerfiles: ./Containerfile
+
+    - name: Log in to Docker Hub
+      if: github.event_name == 'push'
+      uses: docker/login-action@v4
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push image
+      if: github.event_name == 'push'
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: theqfnetwork/qf-squid
+        tags: ${{ github.sha }} latest
+        registry: docker.io
