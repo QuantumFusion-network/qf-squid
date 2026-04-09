@@ -3,7 +3,15 @@ import { GraphQLClient } from "graphql-request"
 import { appEnv } from "@/features/explorer/lib/env"
 import type { ExplorerDetail, ExtrinsicSummary, TransferItem } from "@/features/explorer/lib/types"
 
-const client = new GraphQLClient(appEnv.graphqlEndpoint)
+function getClient() {
+  const endpoint = appEnv.graphqlEndpoint.trim()
+
+  if (!endpoint) {
+    throw new Error("Missing VITE_GRAPHQL_ENDPOINT for live explorer requests")
+  }
+
+  return new GraphQLClient(endpoint)
+}
 
 const EXTRINSIC_FIELDS = `
   id
@@ -43,6 +51,7 @@ function normalizeTransfer(data: TransferItem): TransferItem {
 }
 
 export async function loadExplorerDetailByHash(hash: string): Promise<ExplorerDetail | null> {
+  const client = getClient()
   const response = await client.request<{
     extrinsics: ExtrinsicSummary[]
     transfers: TransferItem[]
@@ -71,6 +80,7 @@ export async function loadExplorerDetailByHash(hash: string): Promise<ExplorerDe
 }
 
 export async function loadExplorerDetailById(id: string): Promise<ExplorerDetail | null> {
+  const client = getClient()
   const extrinsicResponse = await client.request<{
     extrinsicById: ExtrinsicSummary | null
   }>(

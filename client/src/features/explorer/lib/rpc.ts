@@ -6,10 +6,16 @@ import type { ChainProperties } from "@/features/explorer/lib/types"
 let apiPromise: Promise<any> | undefined
 
 async function getApi() {
+  const endpoint = appEnv.rpcEndpoint.trim()
+
+  if (!endpoint) {
+    throw new Error("Missing VITE_RPC_ENDPOINT for live chain property requests")
+  }
+
   if (!apiPromise) {
     apiPromise = (async () => {
       const { ApiPromise, WsProvider } = await import("@polkadot/api")
-      const provider = new WsProvider(appEnv.rpcEndpoint)
+      const provider = new WsProvider(endpoint)
       return ApiPromise.create({ provider })
     })()
   }
@@ -25,6 +31,10 @@ function getFirstArrayValue<T>(value: T | T[] | undefined | null): T | undefined
 export async function loadChainProperties(): Promise<ChainProperties> {
   if (appEnv.useMock) {
     return loadMockChainProperties()
+  }
+
+  if (!appEnv.rpcEndpoint.trim()) {
+    return DEFAULT_CHAIN_PROPERTIES
   }
 
   const api = await getApi()

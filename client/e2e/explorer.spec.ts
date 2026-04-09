@@ -20,8 +20,8 @@ test("search by id shows transfer overview", async ({ page }) => {
   await page.goto(`/tx/${FINALIZED_ID}`)
 
   await expect(page.getByTestId("result-badge")).toHaveText("Success")
-  await expect(page.getByText("Internal ID")).toBeVisible()
-  await expect(page.getByText("Transaction hash")).toBeVisible()
+  await expect(page.locator("div").filter({ hasText: /^Extrinsic ID$/ })).toBeVisible()
+  await expect(page.locator("div").filter({ hasText: /^Transaction hash$/ })).toBeVisible()
 })
 
 test("shows not found state for missing transfer", async ({ page }) => {
