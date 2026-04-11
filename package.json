@@ -5,7 +5,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "build": "rm -rf lib && tsc"
+    "build": "npx --yes rimraf lib && tsc"
   },
   "dependencies": {
     "@subsquid/graphql-server": "^4.6.0",

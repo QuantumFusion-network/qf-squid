@@ -20,10 +20,11 @@ processor.run(new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     let extrinsics: Extrinsic[] = createExtrinsics(blockExtrinsics)
 
     await ctx.store.upsert([...accounts.values()])
-    await ctx.store.insert(transfers)
-    await ctx.store.insert(claimCreations)
-    await ctx.store.insert(claims)
-    await ctx.store.insert(extrinsics)
+    // hot blocks can replay the same ids after a reorg — upsert avoids duplicate key failures from insert()
+    await ctx.store.upsert(transfers)
+    await ctx.store.upsert(claimCreations)
+    await ctx.store.upsert(claims)
+    await ctx.store.upsert(extrinsics)
 })
 
 interface TransferEvent {
