@@ -87,8 +87,14 @@ export function formatFee(value: string, chainProperties: ChainProperties = DEFA
 
 export function formatTimestamp(value: string) {
   return new Intl.DateTimeFormat("en-US", {
-    dateStyle: "medium",
-    timeStyle: "medium",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
   }).format(new Date(value))
 }
 

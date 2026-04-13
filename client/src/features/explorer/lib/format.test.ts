@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { formatAmount, formatFee } from "@/features/explorer/lib/format"
+import { formatAmount, formatFee, formatTimestamp } from "@/features/explorer/lib/format"
 
 describe("format helpers", () => {
   it("formats values with provided chain properties", () => {
@@ -34,5 +34,9 @@ describe("format helpers", () => {
     expect(formatFee("1234560000000000", chainProperties)).toBe("0.00123 QF")
     expect(formatFee("1234560000000", chainProperties)).toBe("0.00000123 QF")
     expect(formatFee("1234560000000000000", chainProperties)).toBe("1.235 QF")
+  })
+
+  it("formats timestamps in UTC with an explicit timezone label", () => {
+    expect(formatTimestamp("2026-01-02T03:04:05Z")).toBe("Jan 2, 2026, 3:04:05 AM UTC")
   })
 })
