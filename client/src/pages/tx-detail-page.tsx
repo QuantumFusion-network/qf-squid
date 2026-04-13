@@ -89,7 +89,6 @@ export function TxDetailPage() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Badge>{detailQuery.data.kind === "hash" ? "Transaction hash" : "Extrinsic ID"}</Badge>
                 <Badge variant={detailQuery.data.extrinsic.success ? "success" : "destructive"}>
                   {detailQuery.data.extrinsic.success ? "Success" : "Failed"}
                 </Badge>
