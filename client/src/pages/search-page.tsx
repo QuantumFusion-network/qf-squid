@@ -1,0 +1,111 @@
+import { Compass, MoveRight, Network, ShieldCheck, Waves } from "lucide-react"
+import { useState } from "react"
+
+import { BrandLockup } from "@/components/brand-lockup"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { SearchForm } from "@/features/explorer/components/search-form"
+import { TempTestPanel } from "@/features/explorer/components/temp-test-panel"
+import { appEnv } from "@/features/explorer/lib/env"
+
+export function SearchPage() {
+  const [searchValue, setSearchValue] = useState("")
+
+  return (
+    <main className="app-shell">
+      <div className="mb-8 flex items-center justify-between gap-4">
+        <BrandLockup />
+      </div>
+      <div className="grid flex-1 items-start gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:pt-8">
+        <section className="space-y-7">
+          <div className="inline-flex items-center gap-2 rounded-full border border-black/8 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+            <Compass className="size-3.5" />
+            QF Network Explorer
+          </div>
+          <div className="space-y-5">
+            <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl xl:text-6xl">
+              Find transfer details
+            </h1>
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+              Search and view transfer details in one place.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/70 bg-white/75 p-4 shadow-sm backdrop-blur-sm sm:p-5">
+            <SearchForm value={searchValue} onValueChange={setSearchValue} />
+            <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-muted-foreground sm:text-sm">
+              <span className="inline-flex items-center gap-1.5">
+                <ShieldCheck className="size-3.5" />
+                Find transfer records
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Network className="size-3.5" />
+                Live transfer details
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Waves className="size-3.5" />
+                Status, block, and amount
+              </span>
+            </div>
+          </div>
+          {appEnv.enableTempTestPanel ? <TempTestPanel onSelect={setSearchValue} /> : null}
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-xl border border-black/6 bg-white/60 p-4">
+              <div className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                Step 1
+              </div>
+              <div className="font-medium">Enter a transaction hash or Extrinsic ID</div>
+            </div>
+            <div className="rounded-xl border border-black/6 bg-white/60 p-4">
+              <div className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                Step 2
+              </div>
+              <div className="font-medium">View the transfer details</div>
+            </div>
+            <div className="rounded-xl border border-black/6 bg-white/60 p-4">
+              <div className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                Step 3
+              </div>
+              <div className="font-medium">Check the transfer status</div>
+            </div>
+          </div>
+        </section>
+
+        <Card className="self-start">
+          <CardHeader>
+            <CardTitle>What you'll see</CardTitle>
+            <CardDescription>
+              Check transfer status, amount, block details, and addresses.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 text-sm">
+            <div className="rounded-lg border border-black/6 bg-white/60 p-4">
+              <div className="mb-2 flex items-center gap-2 font-medium">
+                <Network className="size-4" />
+                Transfer details
+              </div>
+              <p className="text-muted-foreground">
+                View the transfer hash, block, status, addresses, amount, fee, and time.
+              </p>
+            </div>
+            <div className="rounded-lg border border-black/6 bg-white/60 p-4">
+              <div className="mb-2 flex items-center gap-2 font-medium">
+                <ShieldCheck className="size-4" />
+                How to search
+              </div>
+              <p className="text-muted-foreground">
+                Search by transaction hash or Extrinsic ID to open the transfer details page.
+              </p>
+            </div>
+            <div className="rounded-lg border border-dashed border-black/10 bg-amber-50/60 p-4 text-sm text-muted-foreground">
+              <div className="mb-2 flex items-center gap-2 font-medium text-foreground">
+                <MoveRight className="size-4" />
+                Current scope
+              </div>
+              This explorer currently focuses on transfer transactions.
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
+  )
+}

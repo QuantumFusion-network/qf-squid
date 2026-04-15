@@ -1,12 +1,19 @@
 /node_modules
+/client/node_modules
 /lib
 /builds
 /data
+/client/dist
+/client/playwright-report
+/client/test-results
+/client/.env.local
+/drafts
 
 /**Versions.json
 /**Versions.jsonl
 
 # IDE files
 /.idea
+/docs
 
 .env
